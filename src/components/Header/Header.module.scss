@@ -1,0 +1,15 @@
+.header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 100%;
+  gap: 30px;
+  background-color: #ffc9ab;
+
+  &__input {
+    height: 30px;
+    width: 200px;
+  }
+}

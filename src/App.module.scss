@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  &__main {
+    display: flex;
+    flex: 1;
+    margin-top: 60px;
+    height: calc(100% - 60px);
+  }
+}
+
