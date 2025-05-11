@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import styles from './Sidebar.module.scss';
 import classNames from 'classnames';
 import LeftContent from './LeftContent.tsx';
+import styles from './Sidebar.module.scss';
 
 type Props = {
   placement: 'left' | 'right';

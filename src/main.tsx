@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import { PhotosProvider } from 'core/PhotosContext/PhotosContext.tsx';
+import App from './App.tsx';
 import 'normalize.css';
 import './main.css';
 

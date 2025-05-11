@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import styles from './LeftContent.module.scss';
 import { usePhotos } from 'core/PhotosContext/PhotosContext.tsx';
+import styles from './LeftContent.module.scss';
 
 function LeftContent() {
   const { currentPage, loadNextPage } = usePhotos();
