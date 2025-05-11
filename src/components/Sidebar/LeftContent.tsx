@@ -23,6 +23,14 @@ function LeftContent() {
       >
         Prev Page
       </Button>
+      <a
+        className={styles['content__link']}
+        href="https://www.pexels.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Photos provided by Pexels
+      </a>
     </>
   );
 }
