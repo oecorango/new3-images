@@ -41,3 +41,17 @@ export const getSearchPhotos = async (data: Data) => {
     per_page: IMAGES_COUNT,
   });
 };
+
+export const getPhoto = async (id: number) => {
+  const response = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
+    headers: {
+      Authorization: API_KEY,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Pexels API error: ${response.status}`);
+  }
+
+  return response.json();
+};

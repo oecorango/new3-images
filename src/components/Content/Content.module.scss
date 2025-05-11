@@ -1,8 +1,12 @@
 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   flex: 1;
   background-color: #e5e5e5;
   overflow: auto;
   padding: 20px;
+  align-items: center;
 
   &__gallery {
     column-count: 3;
@@ -22,6 +26,7 @@
     margin-bottom: 16px;
     border-radius: 10px;
     break-inside: avoid;
+    cursor: pointer;
   }
 }
 

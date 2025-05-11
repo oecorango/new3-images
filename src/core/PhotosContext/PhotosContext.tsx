@@ -34,7 +34,12 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const loadSearchPage = useCallback(async () => {
-    const response = await getSearchPhotos({ search: currentSearch, page: 1 });
+    const response = currentSearch
+      ? await getSearchPhotos({
+          search: currentSearch,
+          page: 1,
+        })
+      : await getPhotos({ page: 1 });
 
     if ('photos' in response) {
       localStorage.setItem('searchValue', currentSearch);
@@ -53,9 +58,7 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      console.log(searchValue);
-
-      const response = searchValue
+      const response = currentSearch
         ? await getSearchPhotos({
             search: currentSearch,
             page: nextPage,
@@ -65,12 +68,12 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
       if ('photos' in response) {
         localStorage.setItem('imagePage', nextPage.toString());
         setCurrentPage(response.page);
-        setCurrentSearch(searchValue ?? '');
+        setCurrentSearch(currentSearch ?? '');
 
         setPhotos(response.photos);
       }
     },
-    [currentPage, currentSearch, searchValue],
+    [currentPage, currentSearch],
   );
 
   const getFirstPage = useCallback(async () => {
