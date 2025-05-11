@@ -10,13 +10,13 @@ function Content() {
       <h1>Hello</h1>
       <h2>Description</h2>
       <p>Current page: {currentPage}</p>
-      <div className={styles['gallery']}>
+      <div className={styles['content__gallery']}>
         {photos.map(photo => (
           <img
             key={photo.id}
-            src={photo.src.medium}
             alt={photo.photographer}
-            style={{ width: '200px', margin: '10px' }}
+            className={styles['content__photo']}
+            src={photo.src.medium}
           />
         ))}
       </div>

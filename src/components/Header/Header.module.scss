@@ -6,10 +6,15 @@
   height: 60px;
   width: 100%;
   gap: 30px;
-  background-color: #ffc9ab;
+  background-color: #1c1a1a;
 
   &__input {
     height: 30px;
     width: 200px;
+    color: white;
+
+    &::placeholder {
+      color: white;
+    }
   }
 }

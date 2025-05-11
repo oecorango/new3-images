@@ -5,8 +5,9 @@ type Data = {
 
 const API_URL = 'https://api.pexels.com/v1';
 const API_KEY = import.meta.env.VITE_PIXELS_KEY;
+const IMAGES_COUNT = 20;
 
-const fetchFromPexels = async (endpoint: string, params: Record<string, string | number>) => {
+const fetchFromPixels = async (endpoint: string, params: Record<string, string | number>) => {
   const url = new URL(`${API_URL}/${endpoint}`);
 
   Object.entries(params).forEach(([key, value]) => {
@@ -27,16 +28,16 @@ const fetchFromPexels = async (endpoint: string, params: Record<string, string |
 };
 
 export const getPhotos = async (data: Data) => {
-  return fetchFromPexels('curated', {
+  return fetchFromPixels('curated', {
     page: data.page,
-    per_page: 10,
+    per_page: IMAGES_COUNT,
   });
 };
 
 export const getSearchPhotos = async (data: Data) => {
-  return fetchFromPexels('search', {
+  return fetchFromPixels('search', {
     query: data.search ?? '',
     page: data.page,
-    per_page: 10,
+    per_page: IMAGES_COUNT,
   });
 };

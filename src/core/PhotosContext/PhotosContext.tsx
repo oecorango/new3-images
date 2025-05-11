@@ -14,7 +14,7 @@ type PhotosContextType = {
   photos: Photo[];
   currentPage: number;
   currentSearch: string;
-  loadNextPage: (ket: 'prev' | 'next') => void;
+  loadNextPage: (key: 'prev' | 'next') => void;
   loadSearchPage: () => void;
   onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -26,7 +26,7 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
   const searchValue = localStorage.getItem('searchValue');
 
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(Number(savePage) ?? 1);
+  const [currentPage, setCurrentPage] = useState<number>(Number(savePage ?? 1));
   const [currentSearch, setCurrentSearch] = useState<string>(searchValue ?? '');
 
   const onSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +53,8 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
+      console.log(searchValue);
+
       const response = searchValue
         ? await getSearchPhotos({
             search: currentSearch,
@@ -63,11 +65,12 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
       if ('photos' in response) {
         localStorage.setItem('imagePage', nextPage.toString());
         setCurrentPage(response.page);
+        setCurrentSearch(searchValue ?? '');
 
         setPhotos(response.photos);
       }
     },
-    [currentPage, currentSearch],
+    [currentPage, currentSearch, searchValue],
   );
 
   const getFirstPage = useCallback(async () => {
@@ -81,7 +84,7 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
     if ('photos' in response) {
       setPhotos([...response.photos]);
     }
-  }, [currentSearch, currentPage]);
+  }, [currentPage, currentSearch]);
 
   useEffect(() => {
     getFirstPage();
