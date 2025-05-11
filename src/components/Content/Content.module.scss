@@ -3,4 +3,27 @@
   background-color: #e5e5e5;
   overflow: auto;
   padding: 20px;
+
+  &__gallery {
+    column-count: 3;
+    column-gap: 16px;
+
+    @media (max-width: 1024px) {
+      column-count: 2;
+    }
+
+    @media (max-width: 600px) {
+      column-count: 1;
+    }
+  }
+
+  &__photo {
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    break-inside: avoid;
+  }
 }
+
+
+

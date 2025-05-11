@@ -27,7 +27,7 @@
       "react",
       "react-dom"
     ],
-    "baseUrl": "./src",
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*"
