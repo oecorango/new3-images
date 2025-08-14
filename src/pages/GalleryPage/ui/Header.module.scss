@@ -5,8 +5,13 @@
   justify-content: center;
   height: 60px;
   width: 100%;
-  gap: 30px;
+  gap: 80px;
   background-color: #1c1a1a;
+
+  &__block {
+    display: flex;
+    gap: 30px;
+  }
 
   &__input {
     height: 30px;
@@ -17,4 +22,8 @@
       color: white;
     }
   }
+}
+
+.link {
+  color: white;
 }

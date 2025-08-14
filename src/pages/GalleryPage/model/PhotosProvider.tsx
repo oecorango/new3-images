@@ -1,25 +1,7 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  type ReactNode,
-  useEffect,
-  type ChangeEvent,
-} from 'react';
-import { getPhotos, getSearchPhotos } from 'shared/rest/getImages';
+import { type ChangeEvent, type ReactNode, useCallback, useEffect, useState } from 'react';
 import type { Photo } from 'pexels';
-
-type PhotosContextType = {
-  photos: Photo[];
-  currentPage: number;
-  currentSearch: string;
-  loadNextPage: (key: 'prev' | 'next') => void;
-  loadSearchPage: () => void;
-  onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
-};
-
-const PhotosContext = createContext<PhotosContextType | null>(null);
+import { getPhotos, getSearchPhotos } from 'pages/GalleryPage/api/getImages.ts';
+import { PhotosContext } from './PhotosContext.ts';
 
 export const PhotosProvider = ({ children }: { children: ReactNode }) => {
   const savePage = localStorage.getItem('imagePage');
@@ -27,11 +9,31 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
 
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(Number(savePage ?? 1));
+
+  const [inputValue, setInputValue] = useState<string>(searchValue ?? '');
   const [currentSearch, setCurrentSearch] = useState<string>(searchValue ?? '');
 
-  const onSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setCurrentSearch(event.target.value);
+  const [allPages, setAllPages] = useState<number>(0);
+
+  const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
   }, []);
+
+  const submitSearch = useCallback(async () => {
+    setCurrentSearch(inputValue);
+    localStorage.setItem('searchValue', inputValue);
+    setCurrentPage(1);
+
+    const response = inputValue
+      ? await getSearchPhotos({ search: inputValue, page: 1 })
+      : await getPhotos({ page: 1 });
+
+    if ('photos' in response) {
+      localStorage.setItem('imagePage', '1');
+      setPhotos(response.photos);
+      setAllPages(Math.ceil(response.total_results / 20));
+    }
+  }, [inputValue]);
 
   const loadSearchPage = useCallback(async () => {
     const response = currentSearch
@@ -50,6 +52,28 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [currentSearch]);
 
+  const loadCustomPage = useCallback(
+    async (page: number) => {
+      const response = currentSearch
+        ? await getSearchPhotos({
+            search: currentSearch,
+            page,
+          })
+        : await getPhotos({ page });
+
+      setAllPages(Math.ceil(response.total_results / 20));
+
+      if ('photos' in response) {
+        localStorage.setItem('imagePage', page.toString());
+        setCurrentPage(response.page);
+        setCurrentSearch(currentSearch ?? '');
+
+        setPhotos(response.photos);
+      }
+    },
+    [currentSearch],
+  );
+
   const loadNextPage = useCallback(
     async (key: 'prev' | 'next') => {
       const nextPage = key === 'next' ? currentPage + 1 : currentPage - 1;
@@ -64,6 +88,8 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
             page: nextPage,
           })
         : await getPhotos({ page: nextPage });
+
+      setAllPages(Math.ceil(response.total_results / 20));
 
       if ('photos' in response) {
         localStorage.setItem('imagePage', nextPage.toString());
@@ -84,6 +110,8 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
         })
       : await getPhotos({ page: currentPage });
 
+    setAllPages(Math.ceil(response.total_results / 20));
+
     if ('photos' in response) {
       setPhotos([...response.photos]);
     }
@@ -91,21 +119,23 @@ export const PhotosProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getFirstPage();
-  }, []);
+  }, [getFirstPage]);
 
   return (
     <PhotosContext.Provider
-      value={{ photos, currentPage, currentSearch, loadNextPage, loadSearchPage, onSearchChange }}
+      value={{
+        allPages,
+        currentPage,
+        inputValue,
+        loadCustomPage,
+        loadNextPage,
+        loadSearchPage,
+        photos,
+        onInputChange,
+        submitSearch,
+      }}
     >
       {children}
     </PhotosContext.Provider>
   );
-};
-
-export const usePhotos = () => {
-  const ctx = useContext(PhotosContext);
-
-  if (!ctx) throw new Error('usePhotos must be used inside <PhotosProvider>');
-
-  return ctx;
 };

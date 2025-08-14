@@ -14,10 +14,8 @@ export default defineConfig({
   },
   css: {
     preprocessorOptions: {
-      scss: {
-        // Здесь можно указать глобальные переменные или другие настройки
-      },
+      scss: {},
     },
   },
-  base: '/new3-images/',
+  base: '/',
 });

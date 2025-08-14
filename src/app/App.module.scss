@@ -6,9 +6,9 @@
 
   &__main {
     display: flex;
+    flex-direction: column;
     flex: 1;
     margin-top: 60px;
-    height: calc(100% - 60px);
   }
 }
 

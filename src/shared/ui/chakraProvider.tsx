@@ -1,10 +1,10 @@
-import * as React from 'react';
+import type { ReactNode } from 'react';
 import { ThemeProvider } from './themeProvider.tsx';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export function Provider({ children }: Props) {
+export function ChakraProvider({ children }: Props) {
   return <ThemeProvider>{children}</ThemeProvider>;
 }
