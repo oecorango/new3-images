@@ -65,5 +65,5 @@ export default defineConfig({
       scss: {},
     },
   },
-  base: '/',
+  base: '/new3-images/',
 });
