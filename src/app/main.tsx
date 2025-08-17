@@ -10,7 +10,7 @@ import './main.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/new3-images">
       <Chakra>
         <ChakraProvider value={defaultSystem}>
           <PhotosProvider>
