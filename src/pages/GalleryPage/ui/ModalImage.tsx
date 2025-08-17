@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { Button, CloseButton, Dialog, Portal } from '@chakra-ui/react';
-import { getPhoto } from 'pages/GalleryPage/api/getImages.ts';
 import type { Photo } from 'pexels';
+import { getPhoto } from 'pages/GalleryPage/api/getImages.ts';
 import styles from './ModalImage.module.scss';
 
 type Props = {

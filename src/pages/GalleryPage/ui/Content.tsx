@@ -1,7 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import { usePhotos } from 'pages/GalleryPage/model/usePhotos.ts';
-import Footer from 'pages/GalleryPage/ui/Footer.tsx';
-import ModalImage from 'pages/GalleryPage/ui/ModalImage.tsx';
+import Footer from './Footer.tsx';
+import ModalImage from './ModalImage.tsx';
 import styles from './Content.module.scss';
 
 function Content() {

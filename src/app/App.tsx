@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import Header from '../pages/GalleryPage/ui/Header.tsx';
-import Content from '../pages/GalleryPage/ui/Content.tsx';
 import { Route, Routes } from 'react-router-dom';
+import Header from 'pages/GalleryPage/ui/Header.tsx';
+import Content from 'pages/GalleryPage/ui/Content.tsx';
 import styles from './App.module.scss';
 
 function App() {
-  const renderImages = useCallback(
+  const renderGallery = useCallback(
     () => (
       <div className={styles['content__main']}>
         <Content />
@@ -14,7 +14,7 @@ function App() {
     [],
   );
 
-  const renderCreate = useCallback(
+  const renderEditor = useCallback(
     () => <div style={{ position: 'absolute', top: '60px' }}>123454321</div>,
     [],
   );
@@ -23,8 +23,8 @@ function App() {
     <div className={styles['content']}>
       <Header />
       <Routes>
-        <Route path="/" element={renderImages()} />
-        <Route path="create" element={renderCreate()} />
+        <Route path="/" element={renderGallery()} />
+        <Route path="create" element={renderEditor()} />
       </Routes>
     </div>
   );

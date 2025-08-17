@@ -1,8 +1,8 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Input } from '@chakra-ui/react';
 import { usePhotos } from 'pages/GalleryPage/model/usePhotos.ts';
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
 
 function Header() {
   const { inputValue, onInputChange, submitSearch } = usePhotos();

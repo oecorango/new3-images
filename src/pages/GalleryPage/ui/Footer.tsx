@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { Button } from '@chakra-ui/react';
 import { usePhotos } from 'pages/GalleryPage/model/usePhotos.ts';
-import styles from './Footer.module.scss';
 import Pagination from './Pagination.tsx';
+import styles from './Footer.module.scss';
 
 function Footer() {
   const { allPages, currentPage, loadNextPage } = usePhotos();
